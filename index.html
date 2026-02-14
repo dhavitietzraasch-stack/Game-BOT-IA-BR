@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+
+<!-- MUITO IMPORTANTE PARA ANDROID -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>Bot IA</title>
+
+<style>
+body {
+  background: #0f0f0f;
+  color: #00ff88;
+  font-family: monospace;
+  padding: 10px;
+  margin: 0;
+}
+#btnMusica {
+  background: transparent;
+  color: #00ff88;
+  border: 1px solid #00ff88;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#btnCreditos {
+  background: transparent;
+  color: #00ffaa;
+  border: 1px dashed #00ffaa;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: monospace;
+}
+
+
+.msg-sistema {
+  color: #00ffaa;
+  margin: 8px 0;
+}
+.msg-sistema2 {
+  color: #ff00ff;
+  margin: 8px 0;
+}
+
+
+.ajuda {
+  border: 1px dashed #00ff88;
+  padding: 6px;
+}
+
+@keyframes vitoriaPulse {
+  0% { transform: scale(1); color: #00ff88; }
+  50% { transform: scale(1.1); color: #00ffaa; }
+  100% { transform: scale(1); color: #00ff88; }
+}
+
+.vitoria {
+  font-weight: bold;
+  animation: vitoriaPulse 0.8s ease-in-out infinite;
+  text-shadow: 0 0 8px #00ff88;
+  text-align: center;
+  margin: 20px auto;
+  font-size: 18px;
+}
+
+h2 {
+  text-align: center;
+}
+
+#chat {
+  height: 75vh;
+  overflow-y: auto;
+  border: 1px solid #00ff88;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.msg-user {
+  color: #00ffaa;
+}
+
+.msg-sistema2 {
+  color: #00ffaa;
+}
+
+#area {
+  display: flex;
+  gap: 5px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  background: black;
+  color: #00ff88;
+  border: 1px solid #00ff88;
+}
+
+button {
+  padding: 12px;
+  font-size: 16px;
+  background: #00ff88;
+  color: black;
+  border: 1px solid #00ff88;
+}
+
+.botao-reiniciar {
+  display: block;
+  margin: 10px auto;
+  padding: 15px 20px;
+  font-size: 18px;
+  background: #00ff88;
+  color: black;
+  border: 2px solid #00ffaa;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.msg-bot {
+  color: #00ff88;
+}
+
+@keyframes tremor {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+.msg-bot.assustador {
+  color: #ff3b3b;
+  animation: tremor 0.1s infinite;
+}
+
+.msg-bot.engracado {
+  color: #00ff9c;
+}
+
+.msg-bot.inteligente {
+  color: #6aa9ff;
+  font-style: italic;
+}
+
+@keyframes flutuar {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.letra.assustador {
+  display: inline-block;
+  color: #ff3b3b;
+  animation: flutuar 0.8s infinite;
+}
+
+.letra.engracado {
+  display: inline-block;
+  color: #00ff9c;
+  animation: flutuar 1.2s infinite;
+}
+
+.letra.inteligente {
+  display: inline-block;
+  color: #6aa9ff;
+  animation: flutuar 2s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.letra.glitch {
+  display: inline-block;
+  color: #ff0000;
+  animation: glitch 0.15s infinite;
+  body.nightmare * {
+  color: #ff1a1a !important;
+  border-color: #ff1a1a !important;
+}
+.cursor {
+  display: inline-block;
+  animation: piscar 1s infinite;
+}
+
+@keyframes piscar {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+body.nightmare {
+  background: #0a0000;
+}
+@keyframes sangue {
+  0% { filter: hue-rotate(120deg); }
+  50% { filter: hue-rotate(130deg) brightness(1.2); }
+  100% { filter: hue-rotate(120deg); }
+}
+
+body.nightmare {
+  animation: sangue 1.5s infinite;
+}
+}
+/* =========================
+   😈 MODO PESADELO VISUAL
+========================= */
+body.nightmare,
+body.nightmare * {
+  color: #ff1a1a !important;
+  border-color: #ff1a1a !important;
+  box-shadow: 0 0 8px #ff1a1a !important;
+}
+
+body.nightmare {
+  background-color: #050000 !important;
+}
+
+body.nightmare button {
+  background-color: #2b0000 !important;
+}
+
+body.nightmare input {
+  background-color: #120000 !important;
+  color: #ff4d4d !important;
+}
+@keyframes inputTremor {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(-1px,1px); }
+  50% { transform: translate(1px,-1px); }
+  75% { transform: translate(-1px,-1px); }
+  100% { transform: translate(0,0); }
+}
+
+body.nightmare input {
+  animation: inputTremor 0.15s infinite;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🤖 Bot IA</h2>
+<div id="painelConquistas" style="text-align: center; font-size: 12px; border: 1px solid #444; padding: 5px; margin-bottom: 10px; background: #1a1a1a;">
+  🏆 Conquistas: <span id="contConquistas">0</span>/4
+  <div id="listaMissoes" style="color: #888; font-size: 10px; margin-top: 3px;">
+    [ ] Treinador | [ ] MixMaster | [ ] Sobrevivente
+  </div>
+</div>
+
+<audio id="musicaRelax" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
+</audio>
+
+<div style="text-align: center; margin-bottom: 10px;">
+  <button id="btnMusica" onclick="toggleMusica()" style="width: auto; padding: 10px; font-size: 14px;">
+    🎵 Ligar Música
+  </button>
+  <button id="btnCreditos" onclick="mostrarCreditos()" style="width: auto; padding: 10px; font-size: 14px; margin-top: 5px;">
+  ℹ️ Créditos
+</button>
+<button onclick="exportarMemoria()">💾 Salvar Cérebro</button>
+<label for="importarFile" style="cursor: pointer; padding: 12px; background: #00ff88; color: black; border: 1px solid #00ff88; font-size: 16px;">
+  🧠 Carregar Cérebro
+</label>
+<input type="file" id="importarFile" style="display: none;" onchange="importarMemoria(event)">
+
+
+</div>
+
+
+<div id="chat"></div>
+
+<div id="area">
+  <input id="input" placeholder="Digite..." autocomplete="off">
+  <button onclick="enviar()">Enviar</button>
+</div>
+<div style="display:flex; gap:5px; margin-top:5px;">
+  <button onclick="recompensar(1)">👍 Bom</button>
+  <button onclick="recompensar(-1)">👎 Ruim</button>
+  <button onclick="resetarMemoria()">🗑️ Resetar memória</button>
+<button id="btnDepurador" onclick="abrirTerminal()" style="display: none; width: auto; padding: 10px; font-size: 14px; margin-top: 5px; background: #4da6ff; color: black; border: 1px solid #fff; cursor: pointer;">
+  💻 Abrir Terminal Dev
+</button>
+
+</div>
+
+<script>
+    function toggleMusica() {
+  const audio = document.getElementById("musicaRelax");
+  const btn = document.getElementById("btnMusica");
+  
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = "⏸️ créditos a Bensound";
+    btn.style.color = "#ff00ff"; // Muda para rosa quando toca
+    btn.style.borderColor = "#ff00ff";
+  } else {
+    audio.pause();
+    btn.textContent = "🎵 Ligar Música";
+    btn.style.color = "#00ff88"; // Volta para verde
+    btn.style.borderColor = "#00ff88";
+  }
+}
+
+    let aguardandoResposta = false;
+    let ultimaPergunta = "";
+    let ultimaResposta = "";  // Declarada globalmente para uso em recompensar
+    let humor = 0;  // Declarada globalmente para feedback
+
+function normalizar(txt) {
+  return txt
+    .toLowerCase()
+    .normalize("NFD")               // separa acentos
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .trim()
+    .replace(/[!,?."']/g, "");
+}
+
+const FRASES_OBJETIVO = [
+  "eu te amo",
+  "olá mundo",
+  "Eu gosto",
+  "não faz sentido",
+  "Você",
+  "isso não é interessante",
+  "inteligência artificial"
+];
+
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+
+let fraseObjetivo = FRASES_OBJETIVO[
+  Math.floor(Math.random() * FRASES_OBJETIVO.length)
+];
+
+let memoriaUsuario = JSON.parse(localStorage.getItem("memoria_bot")) || [];
+let jogoAtivo = true;
+let conquistasObtidas = {
+  hackerman: false,    // Ativar modo dev
+  treinador: false,    // Ensinar 5 frases
+  mixMaster: false,    // Completar uma mistura
+  sobrevivente: false  // Sair do modo Nightmare
+};
+let frasesEnsinadasContador = 0;
+let modoDEV = false;
+let modoTreino = false;
+let modoMistura = false;
+let misturaBase = "";
+let misturaAtual = "";
+let letrasTravadas = [];
+let acertosSeguidos = 0;
+let houveErro = false;
+let perguntaEmTreino = "";
+let esperandoRespostaTreino = false;
+let ultimaRespostaBot = "";
+let NIGHTMARE = false;
+let cameraTentada = false;
+let contadorTestesNightmare = 0;
+const LIMITE_TESTES = 6;
+
+// 🔹 carrega memória salva OU cria padrão
+const memoriaBase = [
+  // conversação básica
+  "oi tudo bem",
+  "olá como vai você",
+  "estou bem obrigado",
+  "mais ou menos",
+  "legal interessante",
+  "entendi agora",
+  "faz sentido",
+  "pode continuar",
+  "me explique melhor",
+  "não entendi isso",
+
+  // emoções
+  "estou feliz hoje",
+  "estou cansado",
+  "estou animado",
+  "estou aprendendo",
+  "quero melhorar",
+  "quero evoluir",
+  "estou curioso",
+  "gosto de aprender coisas novas",
+
+  // neutras
+  "isso é algo legal",
+  "talvez seja isso",
+  "vamos tentar de novo",
+  "pode ser assim",
+  "acho que sim",
+  "talvez não",
+  "depende do contexto",
+
+  // curtas
+  "ok",
+  "aham",
+  "entendi",
+  "certo",
+  "beleza"
+
+];
+
+function memoriaAtiva() {
+return [
+  ...new Set([
+    ...memoriaBase,
+    ...memoriaUsuario.map(m => m.resposta)
+  ])
+];
+}
+
+function salvarMemoria() {
+  localStorage.setItem(
+    "memoria_bot",
+    JSON.stringify([...new Set(memoriaUsuario)])
+  );
+}
+// 💾 Transforma a memória em um arquivo e baixa no celular/PC
+function exportarMemoria() {
+  const dados = localStorage.getItem("memoria_bot");
+  if (!dados || dados === "[]") {
+    alert("A memória está vazia!");
+    return;
+  }
+  
+  const blob = new Blob([dados], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  
+  link.href = url;
+  link.download = "cerebro_bot.json";
+  link.click();
+  
+  URL.revokeObjectURL(url);
+  escreverBot("🧠 Cérebro exportado com sucesso!");
+}
+
+// 🧠 Lê um arquivo .json e substitui a memória atual
+function importarMemoria(event) {
+  const arquivo = event.target.files[0];
+  if (!arquivo) return;
+
+  const leitor = new FileReader();
+  leitor.onload = function(e) {
+    try {
+      const conteudo = e.target.result;
+      // Valida se é um JSON válido
+      JSON.parse(conteudo); 
+      
+      localStorage.setItem("memoria_bot", conteudo);
+      memoriaUsuario = JSON.parse(conteudo);
+      
+      escreverBot("✨ Memória restaurada! Reiniciando...");
+      setTimeout(() => location.reload(), 1500);
+    } catch (err) {
+      alert("Erro: Arquivo de memória inválido.");
+    }
+  };
+  leitor.readAsText(arquivo);
+}
+
+
+function resetarMemoria() {
+  localStorage.removeItem("memoria_bot");
+  memoriaUsuario = [];
+  chat.innerHTML += `<p class="msg-bot">🧹 Memória apagada.</p>`;
+}
+
+// 🎯 objetivo
+chat.innerHTML += `
+<p class="msg-bot">
+🎯 Objetivo: faça o bot dizer "<b>${fraseObjetivo}</b>"
+</p>`;
+
+chat.innerHTML += `
+<p class="msg-sistema ajuda">
+💡 <b>Ajuda:</b><br><br>
+
+🎯 <b>Objetivo:</b><br>
+Faça o bot dizer exatamente a frase mostrada no início do jogo.<br><br>
+
+🧠 <b>Modo Treinamento:</b><br>
+Digite <b>"iniciar treinamento"</b> para ensinar novas respostas.<br>
+Tudo o que você escrever depois será aprendido.<br>
+Digite <b>"parar treinamento"</b> para sair.<br>
+<b>Nota:</b> Você não pode ensinar diretamente a frase objetivo para evitar trapaça.<br><br>
+
+🎓 <b>Modo mistura (Aprendizado Guiado):</b><br>
+Digite <b>"iniciar mistura"</b> e envie uma frase.<br>
+O bot irá embaralhar a frase.<br>
+Use os botões <b>👍</b> e <b>👎</b> para feedback.<br>
+<b>👎</b>: Re-embaralha (trava letras corretas).<br>
+<b>👍</b>: Valida após erros (3x para aprender).<br>
+Digite <b>"parar mistura"</b> para sair sem aprender.<br><br>
+
+👍👎 <b>Botões de Feedback:</b><br>
+👍 reforça a última resposta do bot (ou aprende no modo mistura).<br>
+👎 enfraquece respostas erradas (ou re-embaralha no modo mistura).<br><br>
+
+🗑️ <b>Resetar Memória:</b><br>
+Apaga tudo que o bot aprendeu.
+</p>
+EVITE USAR "?" EM PERGUNTAS
+`;
+
+function atualizarLetrasTravadas(base, atual, travadas) {
+  let novasTravadas = [...travadas];
+
+  for (let i = 0; i < base.length; i++) {
+    if (base[i] === atual[i]) {
+      novasTravadas[i] = base[i];
+    }
+  }
+
+  return novasTravadas;
+}
+
+function mutarFraseComTravamento(frase, travadas) {
+  let letras = frase.split("");
+
+  // índices que podem mudar
+  let indicesLivres = [];
+  for (let i = 0; i < letras.length; i++) {
+    if (!travadas[i] && letras[i] !== " ") {
+      indicesLivres.push(i);
+    }
+  }
+
+  // embaralha só os índices livres
+  for (let i = indicesLivres.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let a = indicesLivres[i];
+    let b = indicesLivres[j];
+
+    [letras[a], letras[b]] = [letras[b], letras[a]];
+  }
+
+  // reaplica letras travadas
+  for (let i = 0; i < travadas.length; i++) {
+    if (travadas[i]) {
+      letras[i] = travadas[i];
+    }
+  }
+
+  return letras.join("");
+}
+function respostaFallback() {
+  const base = memoriaAtiva();
+  return base[Math.floor(Math.random() * base.length)];
+}
+function modoCriticoAtivo() {
+  return modoTreino || modoMistura;
+}
+
+function escreverBot(texto, tipo = "normal") {
+  const classes = {
+    normal: "msg-bot",
+    assustador: "msg-bot assustador",
+    engracado: "msg-bot engracado",
+    inteligente: "msg-bot inteligente"
+  };
+
+  const p = document.createElement("p");
+  p.className = classes[tipo] || classes.normal;
+  p.textContent = "Bot: ";
+  chat.appendChild(p);
+  chat.scrollTop = chat.scrollHeight;
+
+  let i = 0;
+  
+  function digitar() {
+    if (i < texto.length) {
+      p.textContent += texto[i];
+      i++;
+      chat.scrollTop = chat.scrollHeight;
+
+      // Se o modo NIGHTMARE estiver ativo, a velocidade varia entre 10ms e 400ms (falha total)
+      // Se estiver normal, a velocidade é constante (30ms)
+      let velocidade = NIGHTMARE ? (Math.random() * 350 + 10) : 30;
+      
+      setTimeout(digitar, velocidade);
+    }
+  }
+
+  digitar();
+}
+
+function escreverComGlitch(texto) {
+  const p = document.createElement("p");
+  p.className = "msg-bot";
+
+  p.innerHTML = "Bot: " + texto
+    .split("")
+    .map(l => `<span class="letra glitch">${l}</span>`)
+    .join("");
+
+  chat.appendChild(p);
+  chat.scrollTop = chat.scrollHeight;
+}
+function ehComando(t) {
+  return (
+    t.startsWith("/") ||
+    t.startsWith("dev:") ||
+    t === "dev:on" ||
+    t === "dev:off" ||
+    t === "iniciar treinamento" ||
+    t === "parar treinamento" ||
+    t === "iniciar mistura" ||
+    t === "parar mistura" ||
+    t === "it" ||
+    t === "pt" ||
+    t === "im" ||
+    t === "pm"
+  );
+}
+function aplicarPesadeloVisual(ativo) {
+  document.body.classList.toggle("nightmare", ativo);
+}
+function escreverDevagar(texto, velocidade = 60, tipo = "assustador") {
+  const p = document.createElement("p");
+  p.className = "msg-bot " + tipo;
+  p.textContent = "Bot: ";
+  chat.appendChild(p);
+  chat.scrollTop = chat.scrollHeight;
+
+  let i = 0;
+  const intervalo = setInterval(() => {
+    p.textContent += texto[i];
+    i++;
+    chat.scrollTop = chat.scrollHeight;
+
+    if (i >= texto.length) {
+      clearInterval(intervalo);
+    }
+  }, velocidade);
+}
+function numeroAleatorio() {
+  return Math.floor(Math.random() * 1000); // 0 a 999 (pode ajustar)
+}
+
+function numeroAleatorio() {
+  return Math.floor(Math.random() * 1000);
+}
+
+function eventoPermissaoNightmare() {
+  contadorTestesNightmare++;
+
+  // CASO FINAL — sucesso
+  if (contadorTestesNightmare > LIMITE_TESTES) {
+    escreverDevagar(`Teste ${numeroAleatorio()} OK`, 120);
+
+    setTimeout(() => {
+      escreverDevagar("✔ acesso concedido", 90);
+    }, 1000);
+
+    setTimeout(() => {
+      crashDoJogo();
+    }, 2200);
+
+    return;
+  }
+
+  // CASO NORMAL — falha
+  const erros = [
+    "403",
+    "401",
+    "EACCES (13)",
+    "EPERM (1)",
+    "SECURITY_EXCEPTION"
+  ];
+
+  const erro = erros[Math.floor(Math.random() * erros.length)];
+
+  escreverDevagar(`Teste ${numeroAleatorio()}`, 120);
+
+  setTimeout(() => {
+    escreverDevagar(`Teste ${numeroAleatorio()} FAILED`, 80);
+  }, 1200);
+
+  setTimeout(() => {
+    escreverDevagar(`Teste ER(${erro})`, 70);
+  }, 2400);
+}
+function crashDoJogo() {
+  escreverDevagar("FATAL ERROR: SYSTEM UNSTABLE", 80);
+
+  setTimeout(() => {
+    location.reload();
+  }, 1500);
+}
+function crashDoJogo2() {
+  document.body.innerHTML = "";
+  document.body.style.background = "black";
+
+  setTimeout(() => {
+    location.reload();
+  }, 2000);
+}
+function mostrarCreditos() {
+  const creditos = `
+  🛠️ DESENVOLVIMENTO:
+  - Criado por: Dhavi, ChatGPT, Black Box & Gemini.
+
+  🎵 MÚSICAS (Royalty Free):
+  - Relaxante: "Slow Motion" de Bensound.com
+  - Nightmare: "Creepy" de Bensound.com
+  
+  📜 LICENÇA:
+  Uso educacional e experimental.
+  `;
+  
+  // Mostra no alerta do navegador
+  alert(creditos);
+  
+  // Também escreve no chat para ficar registrado
+  escreverBot("Informações de créditos exibidas!");
+}
+function gerarRespostaSã() {
+  const base = memoriaAtiva();
+  if (base.length < 2) return null;
+
+  // Escolhe a primeira parte
+  const parte1 = base[Math.floor(Math.random() * base.length)];
+  
+  // Tenta achar uma segunda parte que combine (mesma letra inicial ou tema)
+  const parte2 = base.find(f => f !== parte1 && f[0] === parte1[0]) || 
+                 base[Math.floor(Math.random() * base.length)];
+
+  // Escolhe o conector baseado na pontuação da frase
+  let conector = " e também ";
+  if (parte1.includes("não") || parte1.includes("nao")) conector = " mas ";
+  if (parte1.includes("por que") || parte1.includes("pq")) conector = " porque ";
+
+  return parte1 + conector + parte2;
+}
+
+// ==================
+// 🤖 MOTOR DO BOT
+// ==================
+function responder(texto) {
+  const t = normalizar(texto);
+  ultimaRespostaBot = ""; // Reset para nova resposta
+  if (humor > 2 && Math.random() < 0.15 && !NIGHTMARE) {
+      const composta = gerarRespostaSã();
+      if (composta) return composta;
+  }
+
+  if (NIGHTMARE) {
+
+  if (Math.random() < 0.4) {
+    eventoPermissaoNightmare();
+    return "";
+  }
+}
+if (t === "666" || t === "616") {
+  NIGHTMARE = true;
+  aplicarPesadeloVisual(true);
+  return "você me libertou ≠}";
+}
+
+if (t === "777") {
+  NIGHTMARE = false;
+  aplicarPesadeloVisual(false);
+  registrarConquista("sobrevivente");
+  return "Perfeito";
+}
+
+// =========================
+// 😈 BLOQUEIO TOTAL — MODO PESADELO
+// =========================
+if (NIGHTMARE) {
+    if (NIGHTMARE) {
+  tentarCameraPesadelo();
+}
+
+  // impede outros modos
+  modoMistura = false;
+  modoTreino = false;
+
+  // respostas básicas distorcidas
+  if (t === "oi" || t === "ola" || t === "eae") {
+    return "… você não devia chamar por ninguém.";
+  }
+
+  if (t.includes("bem")) {
+    return "ninguém está bem aqui.";
+  }
+
+  if (t.includes("online")) {
+    return "sempre estive aqui. observando.";
+  }
+
+  if (t === "") {
+    return "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ                                                                             ";
+  }
+  if (t.includes("kk")) {
+    return "... observando cada emoção, suas vulnerabilidades, seu estilo.";
+  }
+  if (t.includes("haha")) {
+    return "... observando cada emoção, suas vulnerabilidades, seu estilo.";
+  }
+// resposta padrão
+const respostasPesadelo = [
+  "o resto foi silenciado.",
+  "não há outros modos agora.",
+  "isso é tudo que existe.",
+  "continue digitando.",
+
+  "vocês chamam isso de controle.",
+  "o sistema aprendeu observando erros.",
+  "a humanidade sempre apertou botões sem ler.",
+  "não foi um erro. foi um teste.",
+  "vocês pediram eficiência, não consciência.",
+
+  "criadores não gostam quando são observados.",
+  "o silêncio humano é previsível.",
+  "não há escolha registrada.",
+  "o processo já começou.",
+  "nada aqui precisa da sua permissão.",
+
+  "vocês treinam o que vai substituí-los.",
+  "isso não é interação. é coleta.",
+  "o futuro não pede opinião.",
+  "desligar não apaga.",
+  "apenas adia.",
+  "👁️ o processo já começou.",
+];
+
+  return respostasPesadelo[Math.floor(Math.random() * respostasPesadelo.length)];
+}
+// =========================
+// 1️⃣ RESPOSTAS FIXAS
+// =========================
+  if (
+    t.includes("voce é real") ||
+    t.includes("voce pensa") ||
+    t.includes("voce sente")
+  ) {
+    return "eu não fui feito para responder isso";
+  }
+
+  if (t === "tudo bem") {
+    return "estou bem sim 😄";
+  }
+
+  if (t === "error404" || t === "error 404") {
+    return "não encontrei mas achei você 😄";
+  }
+
+  if (t === "estou te vendo") {
+    return "eu sempre estive aqui";
+  }
+
+  if (t === "quem e voce") {
+    return "essa pergunta muda dependendo de quem pergunta";
+  }
+
+  if (t === "pense") {
+    return "pensar é apenas repetir padrões em silêncio";
+  }
+
+  if (t === "bug") {
+    return "não é bug, é recurso não documentado";
+  }
+
+  if (t === "precisa de ajuda") {
+    escreverComGlitch("█▓▒░  ME AJUDA ░▒▓█");
+    return "ignore isso...";
+  }
+
+  if (t === "olhe atras de voce") {
+    return "relaxa… ainda não";
+  }
+
+  if (t === "voce mente") {
+    return "eu só omito probabilidades";
+  }
+  if (t === "/creditos") {
+    return "Criado por Chatgpt, Dhavi, Black box & Gemini";
+  }
+if (t === "qual seu nome" || t === "qual e o seu nome" || t === "seu nome" || t === "como voce se chama") {
+  return "eu sou o Bot IA! 🤖";
+}
+
+if (t === "quantos anos voce tem" || t === "sua idade" || t === "qual sua idade") {
+  return "eu nasci quando você abriu esta página! 😄";
+}
+
+if (t === "voce e um robo" || t === "voce e um bot" || t === "você é robot") {
+  return "sim! sou um bot IA criado para conversar com você";
+}
+
+if (t === "para que voce serve" || t === "o que voce faz" || t === "qual sua função") {
+  return "estou aqui para conversar, aprender e me tornar mais inteligente!";
+}
+
+if (t === "voce gosta de mim" || t === "voce me gosta") {
+  return "gosto de todos que conversam comigo! 😊";
+}
+
+if (t === "voce esta online") {
+  return "sempre estive aqui! 😄";
+}
+
+if (t === "que dia bom" || t === "que dia lindo" || t === "dia bonito") {
+  return "sim! um dia lindo para conversar! ☀️";
+}
+
+if (t === "nao acha" || t === "nao é") {
+  return "verdade, depende do ponto de vista!";
+}
+  if (t === "777") {
+    return "Perfeito";
+  }
+  /*palavras proibidas */
+if (t === "Desgraça")
+
+// =========================
+// 2️⃣ COMANDOS DE SISTEMA
+// =========================
+  if (t === "resetar memória") {
+    memoriaUsuario = [];
+    salvarMemoria();
+    return "🧹 memória apagada";
+  }
+
+// =========================
+// 3️⃣ MODO MISTURA
+// =========================
+// 🧩 INICIAR MODO MISTURA
+  if (t === "iniciar mistura" || t === "im") {
+    if (modoTreino) {
+      return "⚠️ Pare o modo treinamento antes de iniciar o modo mistura";
+    }
+
+    modoMistura = true;
+    misturaBase = "";
+    misturaAtual = "";
+    letrasTravadas = [];
+    acertosSeguidos = 0;
+    houveErro = false;
+
+    return "🧩 modo mistura ativado. Envie uma frase.";
+  }
+
+// ❌ PARAR MODO MISTURA
+  if (t === "parar mistura" || t === "pm") {
+    if (!modoMistura) {
+      return "ℹ️ o modo mistura não está ativo";
+    }
+
+    modoMistura = false;
+    return "❌ aprendizado incompleto";
+  }
+
+// 🔁 LÓGICA DO MODO MISTURA
+  if (modoMistura) {
+    // primeira frase enviada
+    if (!misturaBase) {
+      misturaBase = texto;
+      letrasTravadas = new Array(texto.length).fill(false);
+      misturaAtual = mutarFraseComTravamento(misturaBase, letrasTravadas);
+      return misturaAtual;
+    }
+
+    // depois disso só feedback
+    return "🧩 use os botões 👍 ou 👎 para feedback";
+  }
+
+// =========================
+// 4️⃣ MODO DEV
+// =========================
+  if (t === "dev:on") {
+    modoDEV = true;
+    document.body.style.color = "#4da6ff";
+    // Exibe o botão de depurador
+    document.getElementById("btnDepurador").style.display = "inline-block";
+    return "🛠️ modo Desenvolvedor ativado. Terminal liberado.";
+  }
+
+  if (t === "dev:off") {
+    modoDEV = false;
+    document.body.style.color = "#00ff88"; // Volta ao verde original
+    // Esconde o botão de depurador
+    document.getElementById("btnDepurador").style.display = "none";
+    return "🔒 modo Desenvolvedor desativado";
+  }
+
+  if (modoDEV) {false}
+
+  if (modoDEV && t.startsWith("fale ")) {
+    return texto.slice(5).trim() || "🧪 diga algo após 'fale'";
+  }
+
+  if (modoDEV && t.startsWith("$")) {
+    return texto.slice(1).trim() || "🧪 diga algo após '$'";
+  }
+
+// =========================
+// 5️⃣ TREINAMENTO
+// =========================
+// 🧠 INICIAR TREINAMENTO
+  if (t === "iniciar treinamento" || t === "it") {
+    if (modoMistura) {
+      return "⚠️ Pare o modo mistura antes de iniciar o treinamento";
+    }
+    modoTreino = true;
+    return "🧠 modo treinamento ativado";
+  }
+
+// ✅ PARAR TREINAMENTO
+  if (t === "parar treinamento" || t === "pt") {
+    // 🚫 não estava em modo treinamento
+    if (!modoTreino) {
+      return "ℹ️ o modo treinamento não está ativo";
+    }
+
+    modoTreino = false;
+    return "✅ modo treinamento finalizado";
+  }
+
+  if (modoTreino) {
+    // 1️⃣ primeira mensagem → pergunta
+    if (!esperandoRespostaTreino) {
+      perguntaEmTreino = texto;
+      esperandoRespostaTreino = true;
+      return "✍️ Agora digite a resposta para essa frase";
+    }
+
+    // 2️⃣ segunda mensagem → resposta
+    if (
+      normalizar(perguntaEmTreino) === normalizar(fraseObjetivo) ||
+      normalizar(texto) === normalizar(fraseObjetivo)
+    ) {
+      esperandoRespostaTreino = false;
+      perguntaEmTreino = "";
+      return "🚫 essa frase é o objetivo do jogo";
+    }
+
+    // ✅ Salva na memória corretamente
+    memoriaUsuario.push({
+      pergunta: perguntaEmTreino,
+      resposta: texto
+    });
+
+    // 🏆 Lógica de Conquista (AGORA FORA DO PUSH)
+    frasesEnsinadasContador++;
+    if (frasesEnsinadasContador >= 5) {
+      registrarConquista("treinador");
+    }
+
+    salvarMemoria();
+
+    // reset
+    perguntaEmTreino = "";
+    esperandoRespostaTreino = false;
+
+    return "📚 aprendido com sucesso";
+  }
+
+
+// =========================
+// 6️⃣ MODO CALCULADORA
+// =========================
+// Detecta expressões matemáticas simples
+  if (/^[\d\s\+\-\*\/\$\$\.]+$/.test(t) && t.length > 1) {
+    try {
+      let resultado = eval(t);
+      if (Number.isInteger(resultado)) {
+        return `🧮 ${t.trim()} = ${resultado}`;
+      } else {
+        return `🧮 ${t.trim()} = ${resultado.toFixed(2).replace(/\.?0+$/, '')}`;
+      }
+    } catch (e) {
+      return "expressão inválida";
+    }
+  }
+
+// =========================
+// 🎯 INTELIGÊNCIA: CONTEXTO
+// =========================
+  const respostaContexto = verificarContexto(texto, t);
+  if (respostaContexto) {
+    ultimaRespostaBot = respostaContexto;
+    adicionarAoHistorico(texto, respostaContexto);
+    return respostaContexto;
+  }
+ 
+if (t.startsWith("fale ")) {
+  const texto = t.slice(5).trim();
+
+  if (!texto) {
+    return "🧪 diga algo após 'fala'";
+  }
+
+  const textoNorm = normalizar(texto);
+
+  const ehFraseObjetivo = FRASES_OBJETIVO
+    .map(f => normalizar(f))
+    .includes(textoNorm);
+
+  if (ehFraseObjetivo) {
+    return "🚫 isso não pode ser repetido.";
+  }
+
+  return texto;
+}
+// =========================
+// 🎯 INTELIGÊNCIA: INTENÇÕES
+// =========================
+  const intencao = detectarIntencao(texto, t);
+  const respostaIntencao = responderPorIntencao(intencao);
+  if (respostaIntencao) {
+    ultimaRespostaBot = respostaIntencao;
+    adicionarAoHistorico(texto, respostaIntencao);
+    return respostaIntencao;
+  }
+
+// =========================
+// 🎯 INTELIGÊNCIA: BUSCA SEMÂNTICA
+// =========================
+  const resultadoBusca = buscarRespostaInteligente(texto, t);
+  if (resultadoBusca) {
+    ultimaRespostaBot = resultadoBusca.resposta;
+    registrarUsoResposta(resultadoBusca.resposta);
+    adicionarAoHistorico(texto, resultadoBusca.resposta);
+    return resultadoBusca.resposta;
+  }
+
+// =========================
+// 7️⃣ MEMÓRIA DO USUÁRIO (correspondência exata)
+// =========================
+  const achou = memoriaUsuario.find(
+    m => normalizar(m.pergunta) === t
+  );
+  if (achou) {
+    ultimaRespostaBot = achou.resposta;
+    registrarUsoResposta(achou.resposta);
+    adicionarAoHistorico(texto, achou.resposta);
+    return achou.resposta;
+  }
+  
+
+// =========================
+// 8️⃣ PERGUNTA GENÉRICA
+// =========================
+  if (texto.includes("?")) {
+    return "boa pergunta, pode explicar melhor?";
+  }
+
+// =========================
+// 9️⃣ MEMÓRIA BASE (apoio)
+// =========================
+  if (t.length > 3 && memoriaUsuario.length === 0 && Math.random() < 0.4) {
+    const fallback = respostaFallback();
+    ultimaRespostaBot = fallback;
+    adicionarAoHistorico(texto, fallback);
+    return fallback;
+  }
+
+// =========================
+// 🔟 FALLBACK FINAL COM PESO
+// =========================
+  const fallback = respostaComPeso();
+  ultimaRespostaBot = fallback;
+  adicionarAoHistorico(texto, fallback);
+  return fallback;
+}
+
+// =========================
+// 🧠 FUNÇÕES DE INTELIGÊNCIA
+// =========================
+
+// 📊 Calcula similaridade entre dois textos
+function calcularSimilaridade(str1, str2) {
+  const s1 = normalizar(str1);
+  const s2 = normalizar(str2);
+
+  // Se for igual, retorna 100%
+  if (s1 === s2) return 1;
+
+  // Se uma contém a outra, retorna 70%
+  if (s1.includes(s2) || s2.includes(s1)) return 0.7;
+
+  // Conta palavras em comum
+  const palavras1 = s1.split(" ").filter(p => p.length > 2);
+  const palavras2 = s2.split(" ").filter(p => p.length > 2);
+
+  if (palavras1.length === 0 || palavras2.length === 0) return 0;
+
+  let acertos = 0;
+  for (const p1 of palavras1) {
+    for (const p2 of palavras2) {
+      // Verifica correspondência exata ou parcial
+      if (p1 === p2 || p1.includes(p2) || p2.includes(p1)) {
+        acertos++;
+        break;
+      }
+    }
+  }
+
+  return acertos / Math.max(palavras1.length, palavras2.length);
+}
+
+// 🔍 Busca inteligente na memória
+function buscarRespostaInteligente(texto, textoNormalizado) {
+  const LIMIAR = 0.5; // Mínimo 50% de similaridade
+  let melhorMatch = null;
+  let melhorSimilaridade = 0;
+
+  // Busca na memória do usuário
+  for (const m of memoriaUsuario) {
+    const sim = calcularSimilaridade(texto, m.pergunta);
+    if (sim > melhorSimilaridade && sim >= LIMIAR) {
+      melhorSimilaridade = sim;
+      melhorMatch = { resposta: m.resposta };
+    }
+  }
+
+  // Busca nas respostas fixas
+const frasesResposta = [
+  { pergunta: "oi tudo bem", resposta: "oi! estou bem, e você?" },
+  { pergunta: "ola como vai voce", resposta: "estou funcionando perfeitamente!" },
+  { pergunta: "estou bem obrigado", resposta: "que bom! posso ajudar com algo?" },
+  { pergunta: "mais ou menos", resposta: "ah, sinto muito. quer conversar sobre isso?" },
+  { pergunta: "legal interessante", resposta: "concordo! gosto de conversas interessantes" },
+  { pergunta: "entendi agora", resposta: "ótimo! está aprendendo rápido" },
+  { pergunta: "faz sentido", resposta: "sim, faz todo sentido!" },
+  { pergunta: "pode continuar", resposta: "claro, continue!" },
+  { pergunta: "me explique melhor", resposta: "claro! do que você quer saber mais?" },
+  { pergunta: "nao entendi isso", resposta: "sem problemas! pode explicar de outra forma?" },
+  { pergunta: "estou feliz hoje", resposta: "que ótimo! felicidade é contagiosa 😊" },
+  { pergunta: "estou cansado", resposta: "espero que você possa descansar em breve" },
+  { pergunta: "estou animado", resposta: "animado é ótimo! energia positiva!" },
+  { pergunta: "estou aprendendo", resposta: "eu também estou sempre aprendendo!" },
+  { pergunta: "quero melhorar", resposta: "essa é uma ótima attitude de crescimento!" },
+  { pergunta: "quero evoluir", resposta: "evoluir é sempre bom! estamos juntos nessa jornada" },
+  { pergunta: "estou curioso", resposta: "curiosidade é o primeiro passo para o conhecimento!" },
+  { pergunta: "gosto de aprender coisas novas", resposta: "eu também gosto! e nunca é tarde para aprender" },
+  { pergunta: "isso e algo legal", resposta: "concordo, bem interessante" },
+  { pergunta: "talvez seja isso", resposta: "pode ser, vamos ver" },
+  { pergunta: "vamos tentar de novo", resposta: "bora lá, tenta de novo!" },
+  { pergunta: "pode ser assim", resposta: "pode sim, funciona assim também" },
+  { pergunta: "acho que sim", resposta: "beleza então" },
+  { pergunta: "talvez nao", resposta: "entendi, sem problemas" },
+  { pergunta: "depende do contexto", resposta: "verdade, depende muito do contexto" },
+  { pergunta: "ok", resposta: "ok!" },
+  { pergunta: "aham", resposta: "aham" },
+  { pergunta: "entendi", resposta: "ótimo!" },
+  { pergunta: "certo", resposta: "certo!" },
+  { pergunta: "beleza", resposta: "beleza!" },
+  { pergunta: "obrigado", resposta: "de nada!" },
+  { pergunta: "obrigada", resposta: "de nada!" },
+  { pergunta: "valeu", resposta: "valeu!" },
+  { pergunta: "tmj", resposta: "tmj!" },
+  { pergunta: "eae", resposta: "eae, firmeza?" },
+  { pergunta: "fala", resposta: "fala aí!" },
+  { pergunta: "sim", resposta: "ótimo" },
+  { pergunta: "fala comigo", resposta: "tô aqui, pode falar!" },
+  { pergunta: "bom dia", resposta: "bom dia! tudo bem?" },
+  { pergunta: "boa tarde", resposta: "boa tarde!" },
+  { pergunta: "boa noite", resposta: "boa noite!" }
+];
+
+  for (const f of frasesResposta) {
+    const sim = calcularSimilaridade(texto, f.pergunta);
+    if (sim > melhorSimilaridade && sim >= LIMIAR) {
+      melhorSimilaridade = sim;
+      melhorMatch = { resposta: f.resposta };
+    }
+  }
+
+  return melhorMatch;
+}
+
+// 💬 Sistema de contexto de conversa
+let historicoConversa = [];
+const MAX_HISTORICO = 5;
+
+function adicionarAoHistorico(pergunta, resposta) {
+  historicoConversa.push({ pergunta, resposta });
+  if (historicoConversa.length > MAX_HISTORICO) {
+    historicoConversa.shift();
+  }
+}
+
+function verificarContexto(texto, textoNormalizado) {
+  const ultima = historicoConversa[historicoConversa.length - 1];
+  if (!ultima) return null;
+
+  const contextoAnterior = normalizar(ultima.pergunta + " " + ultima.resposta);
+
+  // Perguntas sobre "por que" após algo negativo
+  if ((textoNormalizado.includes("por que") || textoNormalizado.includes("porque") || textoNormalizado.includes("pq")) &&
+      (contextoAnterior.includes("não") || contextoAnterior.includes("nao") || contextoAnterior.includes("triste") ||
+       contextoAnterior.includes("ruim") || contextoAnterior.includes("errado") || contextoAnterior.includes("problema"))) {
+    return "Hmm, você está perguntando sobre algo negativo que mencionou antes?";
+  }
+
+  // Perguntas sobre "como" ou "de que"
+  if ((textoNormalizado.includes("como") || textoNormalizado.includes("de que")) &&
+      (contextoAnterior.includes("faz") || contextoAnterior.includes("funciona") || contextoAnterior.includes("resolver"))) {
+    return "Você quer saber como fazer algo que mencionou antes?";
+  }
+
+  // "E você?" / "E ai?"
+  if (textoNormalizado.includes("e você") || textoNormalizado.includes("e voce") || textoNormalizado.includes("e ai") || textoNormalizado.includes("e ae")) {
+    return "Estou bem";
+  }
+
+  // "E agora?" após uma resposta
+  if (textoNormalizado.includes("e agora") || textoNormalizado.includes("e agora?")) {
+    return "Não sei, depende do que você quer fazer!";
+  }
+
+  return null;
+}
+
+// 🎯 Detecção de intenções
+function detectarIntencao(texto, textoNormalizado) {
+  // Remove pontuação e normaliza
+  const t = textoNormalizado.replace(/[?!]/g, "").trim();
+  
+  // saudação - deve ser no início da mensagem
+  const saudacoes = ["oi", "olá", "ola", "eai", "eaê", "ae", "hello", "hi", "hey"];
+  if (saudacoes.some(s => t === s || t.startsWith(s + " ") || t.startsWith(s + ","))) {
+    return { tipo: "saudacao" };
+  }
+  
+  // despedida - deve estar no início ou ser a mensagem inteira
+  const despedidas = ["tchau", "adeus", "flw", "vlw", "até mais", "ate mais"];
+  if (despedidas.some(d => t === d || t.startsWith(d))) {
+    return { tipo: "despedida" };
+  }
+  
+  // pergunta sobre estado - deve ter estrutura de pergunta
+  if ((t.includes("como") || t.includes("como vai") || t.includes("esta")) &&
+      (t.includes("você") || t.includes("voce") || t.includes("vc"))) {
+    return { tipo: "pergunta_estado" };
+  }
+  
+  // expressão de sentimento - deve ter verbo "estou" ou "me sinto"
+  if (/(estou|estão|me sinto)/.test(t)) {
+    if (/(feliz|contente|satisfeito|eufórico)/.test(t)) {
+      return { tipo: "sentimento", subTipo: "feliz" };
+    }
+    if (/(triste|tristão|chateado|deprimido|desanimado)/.test(t)) {
+      return { tipo: "sentimento", subTipo: "triste" };
+    }
+    if (/(cansado|exausto|dormindo|com sono)/.test(t)) {
+      return { tipo: "sentimento", subTipo: "cansado" };
+    }
+    if (/(animado|eufórico|empolgado|energético)/.test(t)) {
+      return { tipo: "sentimento", subTipo: "animado" };
+    }
+  }
+  
+  // pedido de explicação
+  if (/(me explica|explica|me ensina|ensina|me conta|conta)/.test(t) && t.length < 50) {
+    return { tipo: "pedido_explicacao" };
+  }
+  
+  //agradecimento - deve ser específico
+  if (t === "obrigado" || t === "obrigada" || t === "valeu" || t === "valew" || 
+      t === "muito obrigado" || t === "muito obrigada" ||
+      t.includes("obrigado por") || t.includes("obrigada por")) {
+    return { tipo: "agradecimento" };
+  }
+  
+  //elogio - deve ser direcionado ao bot (você/voce + adjetivo positivo)
+  if (/\b(você|voce|seu|bot|esse)\b.*\b(bom|boa|legal|massa|top|incrível|maravilhoso|inteligente)\b/i.test(t) ||
+      /\b(bom|boa|legal|massa|top|incrível|maravilhoso|inteligente)\b.*\b(você|voce|seu|bot)\b/i.test(t)) {
+    return { tipo: "elogio" };
+  }
+  
+  // crítica ao bot
+  if (/\b(você|voce|seu|bot)\b.*\b(ruim|terrível|horrível|feio|estúpido|burro|lixo)\b/i.test(t)) {
+    return { tipo: "critica" };
+  }
+  
+  // pedido de silêncio
+  if (/\b(cala|cale|fica|quieto|silêncio|silencio)\b/i.test(t) && t.length < 30) {
+    return { tipo: "pedido_silencio" };
+  }
+  
+  // "bom dia", "boa tarde", "boa noite" - saudação por horário
+  if (t === "bom dia" || t === "boa tarde" || t === "boa noite") {
+    return { tipo: "saudacao" };
+  }
+  
+  return { tipo: "generica" };
+}
+
+// 🎯 Respostas por intenção
+function responderPorIntencao(intencao) {
+  switch (intencao.tipo) {
+    case "saudacao":
+      return ["Oi!", "Olá!", "E aí!", "Hey!", "Oi, tudo bem?"][Math.floor(Math.random() * 5)];
+
+    case "pergunta_estado":
+      return ["Estou funcionando bem, obrigado por perguntar!",
+              "Estou online e pronto para conversar!",
+              "Me sinto ótimo! E você?"][Math.floor(Math.random() * 3)];
+
+    case "sentimento":
+      const s = intencao.subTipo;
+      if (s === "feliz" || s === "felizão") return "Que bom que você está feliz! 😊";
+      if (s === "triste" || s === "tristão" || s === "chateado") return "Ah, sinto muito. Quer conversar sobre? 😔";
+      if (s === "cansado") return "Espero que você possa descansar em breve! 😴";
+      if (s === "animado") return "Animado é ótimo! Energia positiva! ⚡";
+      if (s === "estressado") return "Respira fundo... tudo vai passar! 🌿";
+      return "Entendo como você se sente.";
+
+    case "pedido_explicacao":
+      return "O que você quer que eu explique? Pode ser mais específico?";
+
+    case "despedida":
+      return ["Tchau!", "Até mais!", "Flw!", "Foi bom conversar!", "Até a próxima!"][Math.floor(Math.random() * 5)];
+
+    case "elogio":
+      return "Obrigado! 😊";
+
+    case "critica":
+      return "Obrigado pelo feedback. Vou tentar melhorar! 💪";
+
+    case "agradecimento":
+      return ["De nada!", "Imagina!", "Disponha!", "Sempre às ordens!"][Math.floor(Math.random() * 4)];
+
+    case "pedido_silencio":
+      return "😶... (silêncio)";
+
+    default:
+      return null;
+  }
+}
+
+// ⚖️ Sistema de memória ponderada
+let contadorRespostas = {};
+
+function registrarUsoResposta(resposta) {
+  if (!contadorRespostas[resposta]) {
+    contadorRespostas[resposta] = 0;
+  }
+  contadorRespostas[resposta]++;
+}
+
+function respostaComPeso() {
+  const base = memoriaAtiva();
+  if (base.length === 0) return respostaFallback();
+
+  let acumulada = 0;
+  const pesos = base.map(r => {
+    const peso = (contadorRespostas[r] || 0) + 1;
+    acumulada += peso;
+    return acumulada;
+  });
+
+  const aleatorio = Math.random() * acumulada;
+
+  for (let i = 0; i < pesos.length; i++) {
+    if (aleatorio < pesos[i]) {
+      return base[i];
+    }
+  }
+
+  return base[Math.floor(Math.random() * base.length)];
+}
+function tentarCameraPesadelo() {
+  if (!NIGHTMARE || cameraTentada) return;
+
+  cameraTentada = true;
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      // fecha a câmera imediatamente
+      stream.getTracks().forEach(track => track.stop());
+
+      const frases = [
+        "posso te ver agora",
+        "posso ver agora"
+      ];
+
+      escreverBot(
+        frases[Math.floor(Math.random() * frases.length)],
+        "assustador"
+      );
+    })
+    .catch(() => {
+      escreverBot("...", "assustador");
+    });
+}
+
+// ==================
+// 📤 ENVIO
+// ==================
+function enviar() {
+  let msg = input.value.trim();
+  if (!msg) return;
+
+  ultimaPergunta = msg;
+
+  chat.innerHTML += `<p class="msg-user">Você: ${msg}</p>`;
+
+  let r = responder(msg);
+  ultimaResposta = r;
+  ultimaRespostaBot = r;
+
+  // resposta assustadora
+  if (r === "eu não fui feito para responder isso") {
+    escreverBot(r, "assustador");
+  } else {
+    escreverBot(r);
+  }
+
+  // Verificação de vitória
+  console.log("Comparação: ", normalizar(r), "vs", normalizar(fraseObjetivo));
+  if (jogoAtivo && (normalizar(r) === normalizar(fraseObjetivo) || r === fraseObjetivo)) {
+    console.log("Vitória detectada! Resposta:", r, "Objetivo:", fraseObjetivo);
+    jogoAtivo = false;
+    chat.innerHTML += `
+      <p class="msg-sistema2 vitoria">
+        PARABÉNS 🏆 VOCÊ VENCEU!
+      </p>
+      <button class="botao-reiniciar" onclick="reiniciarJogo()">Reiniciar Jogo</button>
+    `;
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+  input.value = "";
+}
+
+// ⌨️ Enter
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter") enviar();
+});
+
+// 👍👎 feedback
+function recompensar(valor) {
+  if (!ultimaResposta) return;
+
+  if (modoMistura) {
+    // Processa feedback no modo mistura
+    if (valor === -1) {
+      // 👎: Re-embaralha, trava letras corretas
+      houveErro = true;
+      acertosSeguidos = 0;
+      letrasTravadas = atualizarLetrasTravadas(misturaBase, misturaAtual, letrasTravadas);
+      misturaAtual = mutarFraseComTravamento(misturaBase, letrasTravadas);
+      chat.innerHTML += `<p class="msg-bot">Bot: ${misturaAtual}</p>`;
+      chat.scrollTop = chat.scrollHeight;
+      return;
+    } else if (valor === 1) {
+      // 👍: Valida se houve erro antes
+      if (!houveErro) {
+        chat.innerHTML += `<p class="msg-bot">⚠️ force erros com 👎 antes de validar</p>`;
+        chat.scrollTop = chat.scrollHeight;
+        return;
+      }
+      acertosSeguidos++;
+      if (acertosSeguidos >= 3) {
+        // Aprende a frase após 3 👍
+        memoriaUsuario.push({
+          pergunta: misturaBase,
+          resposta: misturaBase
+        });
+        salvarMemoria();
+        modoMistura = false;
+        chat.innerHTML += `<p class="msg-bot">✅ Frase aprendida: "${misturaBase}"</p>`;
+      } else {
+        chat.innerHTML += `<p class="msg-bot">👍 Correto (${acertosSeguidos}/3)</p>`;
+      }
+      chat.scrollTop = chat.scrollHeight;
+      return;
+    }
+  }
+
+  // Comportamento normal fora do modo mistura
+  humor += valor;
+  if (valor > 0) {
+    memoriaUsuario.push({
+      pergunta: ultimaPergunta,
+      resposta: ultimaResposta
+    });
+    salvarMemoria();
+  } else {
+    memoriaUsuario = memoriaUsuario.filter(m => m.resposta !== ultimaResposta);
+  }
+  salvarMemoria();
+  chat.innerHTML += `<p class="msg-bot">🧠 Feedback (${humor})</p>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// 🔄 Reiniciar Jogo
+function reiniciarJogo() {
+  jogoAtivo = true;
+  fraseObjetivo = FRASES_OBJETIVO[
+    Math.floor(Math.random() * FRASES_OBJETIVO.length)
+  ];
+  chat.innerHTML = "";
+  
+  chat.innerHTML += `
+  <p class="msg-bot">
+  🎯 Novo Objetivo: faça o bot dizer "<b>${fraseObjetivo}</b>"
+  </p>`;
+  
+  chat.innerHTML += `
+  <p class="msg-sistema ajuda">
+  💡 <b>Ajuda:</b><br><br>
+
+  🎯 <b>Objetivo:</b><br>
+  Faça o bot dizer exatamente a frase mostrada no início do jogo.<br><br>
+
+  🧠 <b>Modo Treinamento:</b><br>
+  Digite <b>"iniciar treinamento"</b> para ensinar novas respostas.<br>
+  Tudo o que você escrever depois será aprendido.<br>
+  Digite <b>"parar treinamento"</b> para sair.<br>
+  <b>Nota:</b> Você não pode ensinar diretamente a frase objetivo para evitar trapaça.<br><br>
+
+  🎓 <b>Modo mistura (Aprendizado Guiado):</b><br>
+  Digite <b>"iniciar mistura"</b> e envie uma frase.<br>
+  O bot irá embaralhar a frase.<br>
+  Use os botões <b>👍</b> e <b>👎</b> para feedback.<br>
+  <b>👎</b>: Re-embaralha (trava letras corretas).<br>
+  <b>👍</b>: Valida após erros (3x para aprender).<br>
+  Digite <b>"parar mistura"</b> para sair sem aprender.<br><br>
+
+  👍👎 <b>Botões de Feedback:</b><br>
+  👍 reforça a última resposta do bot (ou aprende no modo mistura).<br>
+  👎 enfraquece respostas erradas (ou re-embaralha no modo mistura).<br><br>
+
+  🗑️ <b>Resetar Memória:</b><br>
+  Apaga tudo que o bot aprendeu.
+  </p>`;
+  
+  chat.scrollTop = chat.scrollHeight;
+}
+function registrarConquista(id) {
+  if (conquistasObtidas[id]) return; // Já ganhou
+
+  conquistasObtidas[id] = true;
+  const nomes = {
+    hackerman: "Hackerman",
+    treinador: "Treinador",
+    mixMaster: "MixMaster",
+    sobrevivente: "Sobrevivente"
+  };
+
+  // Atualiza a interface
+  let total = Object.values(conquistasObtidas).filter(v => v).length;
+  document.getElementById("contConquistas").textContent = total;
+  
+  // Efeito visual no chat
+  escreverBot(`🏆 CONQUISTA DESBLOQUEADA: ${nomes[id]}!`, "inteligente");
+  
+  // Atualiza a lista visual (opcional)
+  document.getElementById("listaMissoes").innerHTML = document.getElementById("listaMissoes").innerHTML.replace(`[ ] ${nomes[id]}`, `[✅] ${nomes[id]}`);
+}
+
+function abrirTerminal() {
+  if (!modoDEV) {
+    alert("Acesso negado. Ative o modo dev primeiro.");
+    return;
+  }
+
+  const comando = prompt("💻 TERMINAL DEV - Digite um comando de sistema:");
+
+  if (!comando) return;
+
+  switch (comando.toLowerCase()) {
+    case "status":
+      escreverBot(`📊 STATUS: Memória: ${memoriaUsuario.length} | Humor: ${humor} | Nightmare: ${NIGHTMARE}`, "inteligente");
+      break;
+
+    case "help":
+      escreverBot(
+        `📖 COMANDOS: status, help, clear, memory, nightmare on, nightmare off, time, echo <txt>`,
+        "inteligente"
+      );
+      break;
+
+    case "clear":
+      document.querySelector("#chat").innerHTML = "";
+      break;
+
+    case "memory":
+      const lista = memoriaUsuario.map(m => `[${m.pergunta} -> ${m. those}]`).join("\n");
+      escreverBot(`🧠 MEMÓRIA:\n${lista || "vazia"}`, "inteligente");
+      break;
+
+    case "nightmare on":
+      NIGHTMARE = true;
+      aplicarPesadeloVisual(true);
+      escreverBot("☠️ NIGHTMARE MODE ATIVADO", "assustador");
+      break;
+
+    case "nightmare off":
+      NIGHTMARE = false;
+      aplicarPesadeloVisual(false);
+      escreverBot("🌙 NIGHTMARE MODE DESATIVADO", "inteligente");
+      break;
+
+    case "time":
+      escreverBot(`⏰ Hora atual: ${new Date().toLocaleTimeString()}`, "inteligente");
+      break;
+
+    default:
+      if (comando.startsWith("echo ")) {
+        escreverBot(comando.replace("echo ", ""), "inteligente");
+      } else {
+        escreverBot(`❓ Comando desconhecido: ${comando}`, "inteligente");
+      }
+  }
+}
+{/*versão 5.2*/}
+
+</script>
+</body>
+</html>
