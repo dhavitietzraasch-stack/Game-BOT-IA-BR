@@ -251,6 +251,11 @@ body.nightmare input {
     [ ] Treinador | [ ] MixMaster | [ ] Sobrevivente
   </div>
 </div>
+<div style="text-align: center; margin-top: 20px;">
+  <button id="btnDoacao" class="botao-doacao">
+    ☕ Apoiar o Desenvolvedor
+  </button>
+</div>
 
 <audio id="musicaRelax" loop>
   <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
@@ -1381,6 +1386,15 @@ function abrirTerminal() {
       }
   }
 }
+document.getElementById("btnDoacao").addEventListener("click", function() {
+    const chavePix = "042.789.652-57"; // Coloque seu e-mail ou CPF aqui
+    
+    // O prompt permite que o usuário copie a chave!
+    prompt("Apoie o projeto! Copie minha chave PIX abaixo: ", chavePix);
+    
+    escreverBot("Muito obrigado pelo apoio! Isso ajuda a manter meu cérebro funcionando. 🤖✨", "inteligente");
+});
+
 // versão 1.1 corrigida
 </script>
 </body>
