@@ -511,7 +511,7 @@ Digite <b>"parar mistura"</b> para sair sem aprender.<br><br>
 🗑️ <b>Resetar Memória:</b><br>
 Apaga tudo que o bot aprendeu.
 </p>
-EVITE USAR "?" EM PERGUNTAS
+EVITE USAR "?" EM PERGUNTAS e USE "calc" antes de qualquer Expressão matematica
 `;
 
 function atualizarLetrasTravadas(base, atual, travadas) {
@@ -1073,67 +1073,64 @@ if (t === "Desgraça")
 if (t.startsWith("calc ")) {
   const expressao = t.replace("calc ", "").trim();
 
+  // Validação de segurança: permite apenas números, operadores e parênteses
   if (!/^[0-9+\-*/().\s]+$/.test(expressao)) {
-    return "❌ Expressão inválida.";
+    return "❌ Expressão inválida. Use apenas números e + - * / ( )";
   }
 
   try {
     const resultado = calcularExpressao(expressao);
     return `🧮 Resultado: ${resultado}`;
-  } catch {
-    return "❌ Erro ao calcular.";
+  } catch (err) {
+    return "❌ Erro no cálculo. Verifique os parênteses.";
   }
 }
 
 function calcularExpressao(expr) {
+  // 1. Tokenização: transforma a string em um array de números e símbolos
   const tokens = expr.match(/(\d+(\.\d+)?)|[+\-*/()]/g);
-
-  if (!tokens) throw new Error("Erro");
-
-  const operadores = {
-    "+": (a, b) => a + b,
-    "-": (a, b) => a - b,
-    "*": (a, b) => a * b,
-    "/": (a, b) => a / b
-  };
-
-  const precedencia = { "+": 1, "-": 1, "*": 2, "/": 2 };
+  if (!tokens) throw new Error("Vazio");
 
   const valores = [];
-  const ops = [];
+  const operadores = [];
+  const precedencia = { "+": 1, "-": 1, "*": 2, "/": 2 };
 
-  function aplicarOperador() {
+  const aplicarOperacao = () => {
     const b = valores.pop();
     const a = valores.pop();
-    const op = ops.pop();
-    valores.push(operadores[op](a, b));
-  }
+    const op = operadores.pop();
+    if (op === "+") valores.push(a + b);
+    if (op === "-") valores.push(a - b);
+    if (op === "*") valores.push(a * b);
+    if (op === "/") valores.push(a / b);
+  };
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
 
     if (!isNaN(token)) {
       valores.push(parseFloat(token));
-    } else if (token in operadores) {
-      while (
-        ops.length &&
-        precedencia[ops[ops.length - 1]] >= precedencia[token]
-      ) {
-        aplicarOperador();
-      }
-      ops.push(token);
-        } else if (token === "(") {
-      ops.push(token);
+    } else if (token === "(") {
+      operadores.push(token);
     } else if (token === ")") {
-      while (ops.length && ops[ops.length - 1] !== "(") {
-        aplicarOperador();
+      while (operadores.length && operadores[operadores.length - 1] !== "(") {
+        aplicarOperacao();
       }
-      ops.pop(); // Remove o "("
+      operadores.pop(); // Remove o "("
+    } else {
+      // É um operador (+, -, *, /)
+      while (
+        operadores.length &&
+        precedencia[operadores[operadores.length - 1]] >= precedencia[token]
+      ) {
+        aplicarOperacao();
+      }
+      operadores.push(token);
     }
   }
 
-  while (ops.length) {
-    aplicarOperador();
+  while (operadores.length) {
+    aplicarOperacao();
   }
 
   return valores[0];
@@ -1747,7 +1744,7 @@ function abrirTerminal() {
       break;
 
     case "memory":
-      const lista = memoriaUsuario.map(m => `[${m.pergunta} -> ${m. those}]`).join("\n");
+      const lista = memoriaUsuario.map(m => `[${m.pergunta} -> ${m.resposta}]`).join("\n");
       escreverBot(`🧠 MEMÓRIA:\n${lista || "vazia"}`, "inteligente");
       break;
 
@@ -1775,7 +1772,7 @@ function abrirTerminal() {
       }
   }
 }
-{/*versão 5.2*/}
+{/*versão 5.3*/}
 
 </script>
 </body>
