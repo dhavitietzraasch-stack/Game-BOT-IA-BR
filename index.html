@@ -1070,22 +1070,61 @@ if (t === "Desgraça")
   }
 
 
-// =========================
-// 6️⃣ MODO CALCULADORA
-// =========================
-// Detecta expressões matemáticas simples
-  if (/^[\d\s\+\-\*\/\$\$\.]+$/.test(t) && t.length > 1) {
-    try {
-      let resultado = eval(t);
-      if (Number.isInteger(resultado)) {
-        return `🧮 ${t.trim()} = ${resultado}`;
-      } else {
-        return `🧮 ${t.trim()} = ${resultado.toFixed(2).replace(/\.?0+$/, '')}`;
-      }
-    } catch (e) {
-      return "expressão inválida";
-    }
+if (t.startsWith("calc ")) {
+  const expressao = t.replace("calc ", "").trim();
+
+  if (!/^[0-9+\-*/().\s]+$/.test(expressao)) {
+    return "❌ Expressão inválida.";
   }
+
+  try {
+    const resultado = calcularExpressao(expressao);
+    return `🧮 Resultado: ${resultado}`;
+  } catch {
+    return "❌ Erro ao calcular.";
+  }
+}
+
+function calcularExpressao(expr) {
+  const tokens = expr.match(/(\d+(\.\d+)?)|[+\-*/()]/g);
+
+  if (!tokens) throw new Error("Erro");
+
+  const operadores = {
+    "+": (a, b) => a + b,
+    "-": (a, b) => a - b,
+    "*": (a, b) => a * b,
+    "/": (a, b) => a / b
+  };
+
+  const precedencia = { "+": 1, "-": 1, "*": 2, "/": 2 };
+
+  const valores = [];
+  const ops = [];
+
+  function aplicarOperador() {
+    const b = valores.pop();
+    const a = valores.pop();
+    const op = ops.pop();
+    valores.push(operadores[op](a, b));
+  }
+
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+
+    if (!isNaN(token)) {
+      valores.push(parseFloat(token));
+    } else if (token in operadores) {
+      while (
+        ops.length &&
+        precedencia[ops[ops.length - 1]] >= precedencia[token]
+      ) {
+        aplicarOperador();
+      }
+      ops.push(token);
+    } else if (token === "(") {
+      ops.push(token);
+    } else if (token === ")
 
 // =========================
 // 🎯 INTELIGÊNCIA: CONTEXTO
