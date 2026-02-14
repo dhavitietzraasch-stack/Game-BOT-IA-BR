@@ -1122,9 +1122,23 @@ function calcularExpressao(expr) {
         aplicarOperador();
       }
       ops.push(token);
-    } else if (token === "(") {
+        } else if (token === "(") {
       ops.push(token);
-    } else if (token === ")
+    } else if (token === ")") {
+      while (ops.length && ops[ops.length - 1] !== "(") {
+        aplicarOperador();
+      }
+      ops.pop(); // Remove o "("
+    }
+  }
+
+  while (ops.length) {
+    aplicarOperador();
+  }
+
+  return valores[0];
+}
+
 
 // =========================
 // 🎯 INTELIGÊNCIA: CONTEXTO
