@@ -125,6 +125,80 @@ button {
 .msg-bot {
   color: #00ff88;
 }
+/* Botão de Doação (Destaque) */
+/* Animação de cores pulsantes */
+@keyframes arcoIris {
+  0% { background-color: #ff0000; color: white; }    /* Vermelho */
+  25% { background-color: #ffdd00; color: black; }   /* Amarelo */
+  50% { background-color: #00ff88; color: black; }   /* Verde Neon */
+  75% { background-color: #007bff; color: white; }   /* Azul */
+  100% { background-color: #ff0000; color: white; }  /* Volta ao Vermelho */
+}
+
+/* Aplicando ao botão de doação */
+.botao-doacao {
+  animation: arcoIris 4s infinite linear; /* Muda de cor a cada 4 segundos infinitamente */
+  border: none !important;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 50px; /* Deixa ele arredondado e estiloso */
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s;
+}
+
+/* Efeito de aumentar quando passa o mouse ou toca */
+.botao-doacao:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+
+/* Botões de Utilidades (Música, Ajuda, Créditos) */
+#btnMusica, #btnhelp, #btnCreditos {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+/* Sistema de Memória */
+button[onclick="exportarMemoria()"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+label[for="importarFile"] {
+    background-color: #28a745 !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* Feedback e Reset */
+button[onclick="recompensar(1)"] {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+}
+
+button[onclick="recompensar(-1)"] {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+}
+
+button[onclick="resetarMemoria()"] {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+}
+
+<audio id="musicaRelax" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="somClique" src="https://www.gstatic.com/freebase/sound/pop_up.mp3" preload="auto"></audio>
 
 @keyframes tremor {
   0% { transform: translate(0, 0); }
@@ -265,6 +339,9 @@ body.nightmare input {
 <audio id="musicaRelax" loop>
   <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
 </audio>
+
+<audio id="somClique" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+
 
 <div style="text-align: center; margin-bottom: 10px;">
   <button id="btnMusica" onclick="toggleMusica()" style="width: auto; padding: 10px; font-size: 14px;">
@@ -1408,8 +1485,34 @@ document.getElementById("btnDoacao").addEventListener("click", function() {
     
     escreverBot("Muito obrigado pelo apoio! Isso ajuda a manter meu cérebro funcionando. 🤖✨", "inteligente");
 });
+function tocarPop() {
+    const som = document.getElementById("somClique");
+    if (som) {
+        // O segredo para o Android: resetar e tocar
+        som.pause();
+        som.currentTime = 0;
+        
+        let playPromise = som.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // Se der erro, é porque o navegador quer que você clique na tela primeiro
+                console.log("Clique na tela para ativar os sons!");
+            });
+        }
+    }
+}
 
-// versão 1.8 corrigida
+// Ouvinte universal: funciona em botões atuais e nos que o Bot criar depois
+document.addEventListener('click', function(e) {
+    if (e.target.closest('button')) {
+        tocarPop();
+    }
+});
+
+
+
+// versão 1.1 corrigida
 </script>
 </body>
 </html>
