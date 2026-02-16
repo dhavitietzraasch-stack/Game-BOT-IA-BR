@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>Bot IA</title>
+<title>Game BOT IA BR Dhavi | Chatbot "Inteligente" em JavaScript</title>
 
+<meta name="description" content="Game BOT IA BR Dhavi é um chatbot \"inteligente\" criado por Dhavi em JavaScript com sistema de aprendizado, modo mistura e recursos avançados de segurança.">
+
+<meta name="author" content="Dhavi">
+
+<meta name="keywords" content="Game BOT IA BR Dhavi, chatbot, IA, bot JavaScript, projeto Dhavi, bot inteligente brasileiro">
+
+<meta name="robots" content="index, follow">
 <style>
 body {
   background: #0f0f0f;
@@ -603,20 +608,21 @@ function gerarRespostaSã() {
 function calcularExpressao(expr) {
   // 1. FILTRO DE ELITE: Só aceita se a frase for EXCLUSIVAMENTE números e sinais
   // Se houver letras ou se a frase for muito curta, ele retorna null (não é erro)
-  const regexEstrita = /^[\d\s\+\-\*\/\.\(\)]+$/;
+  const regexEstrita = /^[\d\s\**\+\-\*\/\.\(\)]+$/;
   if (!regexEstrita.test(expr) || expr.trim().length < 3) {
     return null; 
   }
 
   try {
-    const tokens = expr.match(/(\d+(\.\d+)?)|[+\-*/()]/g);
+    const tokens = expr.match(/(\d+(\.\d+)?)|[+\-**/()]/g);
     if (!tokens) return null;
 
     const valores = [], operadores = [];
-    const precedencia = { "+": 1, "-": 1, "*": 2, "/": 2 };
+    const precedencia = { "+": 1, "-": 1, "*": 2, "/": 2, "**": 2};
 
     const aplicarOperacao = () => {
       const b = valores.pop(), a = valores.pop(), op = operadores.pop();
+      if (op === "**") valores.push(a ** b);
       if (op === "+") valores.push(a + b);
       if (op === "-") valores.push(a - b);
       if (op === "*") valores.push(a * b);
@@ -941,8 +947,13 @@ function calcularSimilaridade(str1, str2) {
   // Se for igual, retorna 100%
   if (s1 === s2) return 1;
 
-  // Se uma contém a outra, retorna 70%
-  if (s1.includes(s2) || s2.includes(s1)) return 0.7;
+  // CORREÇÃO: Penalidade matemática para fragmentos curtos
+  if (s1.includes(s2) || s2.includes(s1)) {
+    const proporcao = Math.min(s1.length, s2.length) / Math.max(s1.length, s2.length);
+    // Retorna base de 40% (0.4) + um bônus proporcional ao tamanho.
+    // Assim, "htm" e "html locooooooo" não atingem o Limiar de 0.5.
+    return 0.4 + (proporcao * 0.5); 
+  }
 
   // Conta palavras em comum
   const palavras1 = s1.split(" ").filter(p => p.length > 2);
@@ -953,7 +964,6 @@ function calcularSimilaridade(str1, str2) {
   let acertos = 0;
   for (const p1 of palavras1) {
     for (const p2 of palavras2) {
-      // Verifica correspondência exata ou parcial
       if (p1 === p2 || p1.includes(p2) || p2.includes(p1)) {
         acertos++;
         break;
@@ -1307,9 +1317,13 @@ function recompensar(valor) {
       if (!houveErro) { chat.innerHTML += `<p class="msg-bot">⚠️ force erros com 👎 antes de validar</p>`; chat.scrollTop = chat.scrollHeight; return; }
       acertosSeguidos++;
       if (acertosSeguidos >= 3) {
-        memoriaUsuario.push({ pergunta: misturaBase, resposta: misturaBase }); salvarMemoria(); modoMistura = false;
-        chat.innerHTML += `<p class="msg-bot">✅ Frase aprendida: "${misturaBase}"</p>`;
+        // Agora salva a misturaAtual (a frase embaralhada) em vez da base
+        memoriaUsuario.push({ pergunta: misturaAtual, resposta: misturaAtual }); 
+        salvarMemoria(); 
+        modoMistura = false;
+        chat.innerHTML += `<p class="msg-bot">✅ Frase aprendida: "${misturaAtual}"</p>`;
       } else chat.innerHTML += `<p class="msg-bot">👍 Correto (${acertosSeguidos}/3)</p>`;
+
       chat.scrollTop = chat.scrollHeight; return;
     }
   }
@@ -1395,7 +1409,7 @@ document.getElementById("btnDoacao").addEventListener("click", function() {
     escreverBot("Muito obrigado pelo apoio! Isso ajuda a manter meu cérebro funcionando. 🤖✨", "inteligente");
 });
 
-// versão 1.1 corrigida
+// versão 1.8 corrigida
 </script>
 </body>
 </html>
